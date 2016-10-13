@@ -99,5 +99,61 @@ class Exhibition_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/exhibition-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+	
+  /**
+	 * Register metaboxes used in the exhibition post type
+	 *
+	 * @since    1.0.0
+	 */
+	public function exhibition_metaboxes() {
+  
+    // Start with an underscore to hide fields from custom fields list
+    $prefix = '_exhibition_';
+  
+    /**
+     * Initiate the metabox
+     */
+    $cmb = new_cmb2_box( array(
+      'id'            => 'exhibition_info_metabox',
+      'title'         => __( 'Exhibition information', 'exhibition-post-type' ),
+      'object_types'  => array( 'exhibition', ),
+      'context'       => 'normal',
+      'priority'      => 'high',
+      'show_names'    => true, // Show field names on the left
+      // 'cmb_styles' => false, // false to disable the CMB stylesheet
+      // 'closed'     => true, // Keep the metabox closed by default
+    ) );
+    
+    $cmb->add_field( array(
+      'name' => __( 'Start', 'exhibition-post-type' ),
+      'id'   => 'date_start',
+      'type' => 'text_date',
+      // 'timezone_meta_key' => 'wiki_test_timezone',
+      'date_format' => 'Y-m-d',
+      'column' => array(
+        'position' => 2,
+        'name'     => __( 'Start', 'exhibition-post-type' ),
+      ),
+    ) );
+    
+    $cmb->add_field( array(
+      'name' => __( 'End', 'exhibition-post-type' ),
+      'id'   => 'date_end',
+      'type' => 'text_date',
+      'date_format' => 'Y-m-d',
+      'column' => array(
+        'position' => 3,
+        'name'     => __( 'End', 'exhibition-post-type' ),
+      ),
+    ) );
+    
+    $cmb->add_field( array(
+      'name' => __( 'Until further notice', 'exhibition-post-type' ),
+      'desc' => __( "If the exhibition doesn't have a set end date.", 'exhibition-post-type' ),
+      'id'   => 'date_no_end',
+      'type' => 'checkbox',
+    ) );
+  
+  }
 
 }
