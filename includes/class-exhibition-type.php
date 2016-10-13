@@ -61,6 +61,12 @@ class Exhibition_Custom_Post_Type {
 	 * @return 		void
 	 */
 	public function exhibition_post_type() {
+  	
+  	if ( get_option('slug_exhibitions') != false ) {
+    	$slug_exhibitions = get_option('slug_exhibitions');
+  	} else {
+    	$slug_exhibitions = 'exhibitions';
+  	}
   
   	$labels = array(
   		'name'                  => _x( 'Exhibitions', 'Post Type General Name', 'exhibition' ),
@@ -108,7 +114,7 @@ class Exhibition_Custom_Post_Type {
   		'exclude_from_search'   => false,
   		'publicly_queryable'    => true,
   		'capability_type'       => 'page',
-  		'rewrite'               => array( 'slug' => 'utstallningar' ),
+  		'rewrite'               => array( 'slug' => $slug_exhibitions ),
   	);
   	register_post_type( 'exhibition', $args );
   

@@ -61,7 +61,13 @@ class Exhibition_Taxonomy {
 	 * @return 		void
 	 */
 	public function artist_taxonomy() {
-  
+  	
+  	if ( get_option('slug_artists') != false ) {
+    	$slug_artists = get_option('slug_artists');
+  	} else {
+    	$slug_artists = 'artists';
+  	}
+  	
   	$labels = array(
   		'name'                       => _x( 'Artists', 'Taxonomy General Name', 'exhibition' ),
   		'singular_name'              => _x( 'Artist', 'Taxonomy Singular Name', 'exhibition' ),
@@ -83,7 +89,7 @@ class Exhibition_Taxonomy {
   		'no_terms'                   => __( 'No Artists', 'exhibition' ),
   		'items_list'                 => __( 'Artists list', 'exhibition' ),
   		'items_list_navigation'      => __( 'Artists list navigation', 'exhibition' ),
-  		'rewrite'                    => array( 'slug' => 'konstnarer' ), //TODO setting
+  		'rewrite'                    => array( 'slug' => $slug_artists ), //TODO setting
   	);
   	$args = array(
   		'labels'                     => $labels,

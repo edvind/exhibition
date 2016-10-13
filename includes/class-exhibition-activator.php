@@ -30,7 +30,15 @@ class Exhibition_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+    
+    if ( get_option( 'slug_artists' ) == false ) {
+      update_option( 'slug_artists', 'artists' );
+    }
+    
+    if ( get_option( 'slug_exhibitions' ) == false ) {
+      update_option( 'slug_exhibitions', 'exhibitions' );
+    }
+    
 	}
 
 }

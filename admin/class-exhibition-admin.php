@@ -173,6 +173,8 @@ class Exhibition_Admin {
   public function register_settings() {
   	register_setting( 'exhibition-settings-group', 'dm_api_key' );
   	register_setting( 'exhibition-settings-group', 'dm_owner' );
+  	register_setting( 'exhibition-settings-group', 'slug_artists' );
+  	register_setting( 'exhibition-settings-group', 'slug_exhibitions' );
   }
   
   /**

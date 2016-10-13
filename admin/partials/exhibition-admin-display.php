@@ -32,6 +32,19 @@
     </tr>
   </table>
   
+  <h2><?php _e( 'Slugs', 'exhibition' ); ?></h2>
+  <table class="form-table">
+    <tr valign="top">
+    <th scope="row"><?php _e( 'Exhibitions', 'exhibition' ); ?></th>
+    <td>/<input type="text" name="slug_exhibitions" value="<?php echo esc_attr( get_option('slug_exhibitions') ); ?>" />/</td>
+    </tr>
+     
+    <tr valign="top">
+    <th scope="row"><?php _e( 'Artists', 'exhibition' ); ?></th>
+    <td>/<input type="text" name="slug_artists" value="<?php echo esc_attr( get_option('slug_artists') ); ?>" />/</td>
+    </tr>
+  </table>
+  
   <?php submit_button(); ?>
 
 </form>
