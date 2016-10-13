@@ -53,4 +53,98 @@ class Exhibition_Shared {
 		$this->version = $version;
 	}
 	
+  /**
+	 * Import exhibitions from digitaltmuseum.se
+	 *
+	 * @since 		1.0.0
+	 */
+	public function exhibition_import_from_dm() {
+    
+    $dm_api_key = get_option( 'dm_api_key' );
+    $dm_owner = get_option( 'dm_owner' );
+    
+  	$url = 'http://api.dimu.org/api/solr/select?q=*&fq=identifier.owner:'.$dm_owner.'&fq=artifact.type:Exhibition*&wt=json&api.key='.$dm_api_key;
+  	
+  	$args = stream_context_create(array('http'=>
+  	    array(
+  	        'timeout' => 2500,
+  	    )
+  	));
+  	$json_feed = file_get_contents( $url, false, $args );
+  	$json_feed = json_decode( $json_feed );
+  	
+  	// Import each exhibition as a post
+  	foreach ($json_feed->response->docs as $exhibition):
+  	   
+  	    //echo $exhibition->{'artifact.uuid'};
+  	    //echo $exhibition->{'artifact.ingress.description'};
+  	    
+  	    exhibition_insert_post( $exhibition->{'artifact.uuid'} );
+  	
+  	endforeach;
+  }
+  
+  /**
+	 * Import found exhibition to the exhibition custom post type.
+	 *
+	 * @since 		1.0.0
+	 * @var       string    $uuid    Unique ID of DigitaltMuseum post eg. CC52D261-405C-47C6-88EF-4FD7D4EF725C
+	 */
+	public function exhibition_insert_post( $uuid ) {
+    
+    $url = 'http://api.dimu.org/artifact/uuid/'.$uuid;
+    
+  	$args = stream_context_create(array('http'=>
+      array(
+          'timeout' => 2500,
+      )
+  	));
+  	
+  	$json_feed = file_get_contents( $url, false, $args );
+  	$json_feed = json_decode( $json_feed );
+  	
+  	foreach ( $json_feed->exhibition->titles as $title ) :
+  	
+  	  if ( $title->status == 'original' ) :
+  	    $exhibition_title = $title->title;
+  	  endif;
+  	  
+  	endforeach;
+  	
+  	$exhibition_uuid = $uuid;
+  	$exhibition_date_start = dm_date_to_wp( $json_feed->exhibition->timespan->fromDate );
+  	$exhibition_date_end = dm_date_to_wp( $json_feed->exhibition->timespan->toDate );
+  	$exhibition_unique_id = $json_feed->unique_id;
+  	$exhibition_description = nl2br ($json_feed->description);
+  	
+  	
+  	echo $exhibition_title;
+    echo '<br>';
+  	echo $exhibition_uuid;
+  	echo '<br>';
+  	echo $exhibition_unique_id;
+  	echo '<br>';
+  	echo $exhibition_date_start;
+  	echo '<br>';
+  	echo $exhibition_date_end;
+  	echo '<br>';
+  	echo $exhibition_description;
+  	echo '<br><br>';
+  	
+  }
+  
+  /**
+	 * Convert DM start/end dates to custom field date
+	 *
+	 * @since 		1.0.0
+	 * @var       string    $date    DM formatted date eg. 00000000-0000-000
+	 * @return    string             Date in format yyyy-mm-dd
+	 */
+	public function dm_date_to_wp( $date ) {
+    $date_str = substr($date, 0, 8);
+    $date_str = substr_replace($date_str, '-', 6, 0);
+    $date_str = substr_replace($date_str, '-', 4, 0);
+    return $date_str;
+  }
+	
 } // class
