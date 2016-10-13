@@ -75,6 +75,9 @@ class Exhibition {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_shared_hooks();
+		$this->define_taxonomy_hooks();
+		$this->define_custom_post_type_hooks();
 
 	}
 
@@ -87,6 +90,9 @@ class Exhibition {
 	 * - Exhibition_i18n. Defines internationalization functionality.
 	 * - Exhibition_Admin. Defines all hooks for the admin area.
 	 * - Exhibition_Public. Defines all hooks for the public side of the site.
+	 * - Exhibition_Shared. Defines all hooks for the public and admin side of the site.
+	 * - Exhibition_Taxonomy. Defines custom taxonomies.
+	 * - Exhibition_Custom_Post_Type. Defines custom post types.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -118,6 +124,21 @@ class Exhibition {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-exhibition-public.php';
+		
+		/**
+		 * The class responsible for defining all actions shared by the Dashboard and public-facing sides.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-exhibition-shared.php';
+		
+		/**
+		 * The class responsible for registering custom taxonomies.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-exhibition-taxonomy.php';
+		
+		/**
+		 * The class responsible for registering custom post types.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-exhibition-type.php';
 
 		$this->loader = new Exhibition_Loader();
 
@@ -170,6 +191,49 @@ class Exhibition {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+	}
+
+  /**
+	 * Register all of the hooks shared between public-facing and admin functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_shared_hooks() {
+  	
+		$plugin_shared = new Exhibition_Shared( $this->get_plugin_name(), $this->get_version() );
+
+		//$this->loader->add_action( 'init', $plugin_shared, 'artist_taxonomy' );
+
+	}
+	
+  /**
+	 * Register all of the hooks associated with registering custom taxonomies
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_taxonomy_hooks() {
+  	
+		$plugin_taxonomy = new Exhibition_Taxonomy( $this->get_plugin_name(), $this->get_version() );
+		
+		$this->loader->add_action( 'init', $plugin_taxonomy, 'artist_taxonomy' );
+		
+	}
+	
+  /**
+	 * Register all of the hooks associated with registering custom post types
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_custom_post_type_hooks() {
+  	
+		$plugin_type = new Exhibition_Custom_Post_Type( $this->get_plugin_name(), $this->get_version() );
+		
+		$this->loader->add_action( 'init', $plugin_type, 'exhibition_post_type', 0 );
+		
 	}
 
 	/**
