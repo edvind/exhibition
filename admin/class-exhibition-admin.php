@@ -115,7 +115,7 @@ class Exhibition_Admin {
      */
     $cmb = new_cmb2_box( array(
       'id'            => 'exhibition_info_metabox',
-      'title'         => __( 'Exhibition information', 'exhibition-post-type' ),
+      'title'         => __( 'Exhibition information', 'exhibition' ),
       'object_types'  => array( 'exhibition', ),
       'context'       => 'normal',
       'priority'      => 'high',
@@ -125,31 +125,31 @@ class Exhibition_Admin {
     ) );
     
     $cmb->add_field( array(
-      'name' => __( 'Start', 'exhibition-post-type' ),
+      'name' => __( 'Start', 'exhibition' ),
       'id'   => 'date_start',
       'type' => 'text_date',
       // 'timezone_meta_key' => 'wiki_test_timezone',
       'date_format' => 'Y-m-d',
       'column' => array(
         'position' => 2,
-        'name'     => __( 'Start', 'exhibition-post-type' ),
+        'name'     => __( 'Start', 'exhibition' ),
       ),
     ) );
     
     $cmb->add_field( array(
-      'name' => __( 'End', 'exhibition-post-type' ),
+      'name' => __( 'End', 'exhibition' ),
       'id'   => 'date_end',
       'type' => 'text_date',
       'date_format' => 'Y-m-d',
       'column' => array(
         'position' => 3,
-        'name'     => __( 'End', 'exhibition-post-type' ),
+        'name'     => __( 'End', 'exhibition' ),
       ),
     ) );
     
     $cmb->add_field( array(
-      'name' => __( 'Until further notice', 'exhibition-post-type' ),
-      'desc' => __( "If the exhibition doesn't have a set end date.", 'exhibition-post-type' ),
+      'name' => __( 'Until further notice', 'exhibition' ),
+      'desc' => __( "If the exhibition doesn't have a set end date.", 'exhibition' ),
       'id'   => 'date_no_end',
       'type' => 'checkbox',
     ) );
