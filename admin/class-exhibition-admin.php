@@ -155,5 +155,33 @@ class Exhibition_Admin {
     ) );
   
   }
+  
+  /**
+   * Register the administration menu for this plugin into the WordPress Dashboard menu.
+   *
+   * @since 1.0.0
+   */
+  public function add_exhibition_admin_menu() {
+  	add_options_page( __( 'Exhibition settings', 'exhibition' ), __( 'Exhibitions', 'exhibition' ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+  }
+  
+  /**
+   * Register exhibition settings.
+   *
+   * @since 1.0.0
+   */
+  public function register_settings() {
+  	register_setting( 'exhibition-settings-group', 'dm_api_key' );
+  	register_setting( 'exhibition-settings-group', 'dm_owner' );
+  }
+  
+  /**
+   * Render the settings page.
+   *
+   * @since 1.0.0
+   */
+  public function display_plugin_setup_page() {
+  	include_once( 'partials/exhibition-admin-display.php' );
+  }
 
 }
