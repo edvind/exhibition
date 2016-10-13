@@ -75,11 +75,8 @@ class Exhibition_Shared {
   	
   	// Import each exhibition as a post
   	foreach ($json_feed->response->docs as $exhibition):
-  	   
-  	    //echo $exhibition->{'artifact.uuid'};
-  	    //echo $exhibition->{'artifact.ingress.description'};
-  	    
-  	    exhibition_insert_post( $exhibition->{'artifact.uuid'} );
+  	
+  	    $this->exhibition_insert_post( $exhibition->{'artifact.uuid'} );
   	
   	endforeach;
   }
@@ -112,11 +109,10 @@ class Exhibition_Shared {
   	endforeach;
   	
   	$exhibition_uuid = $uuid;
-  	$exhibition_date_start = dm_date_to_wp( $json_feed->exhibition->timespan->fromDate );
-  	$exhibition_date_end = dm_date_to_wp( $json_feed->exhibition->timespan->toDate );
+  	$exhibition_date_start = $this->dm_date_to_wp( $json_feed->exhibition->timespan->fromDate );
+  	$exhibition_date_end = $this->dm_date_to_wp( $json_feed->exhibition->timespan->toDate );
   	$exhibition_unique_id = $json_feed->unique_id;
   	$exhibition_description = nl2br ($json_feed->description);
-  	
   	
   	echo $exhibition_title;
     echo '<br>';

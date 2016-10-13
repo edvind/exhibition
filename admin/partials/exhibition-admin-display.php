@@ -48,4 +48,11 @@
   <?php submit_button(); ?>
 
 </form>
+  
+  <?php
+    // TESTING
+    $plugin_shared = new Exhibition_Shared( 'exhibition', '1.0.0' );
+
+    print $plugin_shared->exhibition_import_from_dm();
+    ?>
 </div>
