@@ -112,6 +112,7 @@ class Exhibition_Shared {
   	$exhibition_date_start = $this->dm_date_to_wp( $json_feed->exhibition->timespan->fromDate );
   	$exhibition_date_end = $this->dm_date_to_wp( $json_feed->exhibition->timespan->toDate );
   	$exhibition_unique_id = $json_feed->unique_id;
+    $exhibition_id = $json_feed->identifier->id;
   	$exhibition_description = nl2br ($json_feed->description);
   	
   	echo $exhibition_title;
@@ -119,6 +120,8 @@ class Exhibition_Shared {
   	echo $exhibition_uuid;
   	echo '<br>';
   	echo $exhibition_unique_id;
+  	echo '<br>';
+  	echo $exhibition_id;
   	echo '<br>';
   	echo $exhibition_date_start;
   	echo '<br>';

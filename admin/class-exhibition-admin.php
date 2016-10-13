@@ -154,6 +154,42 @@ class Exhibition_Admin {
       'type' => 'checkbox',
     ) );
   
+  
+    /**
+     * Initiate the metabox
+     */
+    $cmb = new_cmb2_box( array(
+      'id'            => 'exhibition_dm_metabox',
+      'title'         => __( 'DigitaltMuseum', 'exhibition' ),
+      'object_types'  => array( 'exhibition', ),
+      'context'       => 'normal',
+      'priority'      => 'high',
+      'show_names'    => true, // Show field names on the left
+      // 'cmb_styles' => false, // false to disable the CMB stylesheet
+      // 'closed'     => true, // Keep the metabox closed by default
+    ) );
+    
+    $cmb->add_field( array(
+      'name' => __( 'Museum inventory no.', 'exhibition' ),
+      'desc' => __( "Museum or collection's own identifier / inventory no., e.g. HM27346", 'exhibition' ),
+      'id'   => 'id_museum',
+      'type' => 'text',
+    ) );
+    
+    $cmb->add_field( array(
+      'name' => __( 'DiMu ID', 'exhibition' ),
+      'desc' => __( 'DiMu-specific unique id for object, e.g. 021106469355', 'exhibition' ),
+      'id'   => 'artifact_uniqueid',
+      'type' => 'text',
+    ) );
+    
+    $cmb->add_field( array(
+      'name' => __( 'UUID', 'exhibition' ),
+      'desc' => __( 'UUID e.g. CC52D261-405C-47C6-88EF-4FD7D4EF725C', 'exhibition' ),
+      'id'   => 'id_uuid',
+      'type' => 'text',
+    ) );
+  
   }
   
   /**
