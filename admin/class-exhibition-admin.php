@@ -170,6 +170,13 @@ class Exhibition_Admin {
     ) );
     
     $cmb->add_field( array(
+      'name' => __( 'Warning', 'exhibition'),
+      'desc' => __( "Editing these fields may result in connection problems with DigitaltMuseum.", 'exhibition' ),
+      'type' => 'title',
+      'id'   => 'dm_title'
+    ) );
+    
+    $cmb->add_field( array(
       'name' => __( 'Museum inventory no.', 'exhibition' ),
       'desc' => __( "Museum or collection's own identifier / inventory no., e.g. HM27346", 'exhibition' ),
       'id'   => 'id_museum',
