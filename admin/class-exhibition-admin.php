@@ -114,7 +114,7 @@ class Exhibition_Admin {
     
     $cmb->add_field( array(
       'name' => __( 'Start', 'exhibition' ),
-      'id'   => 'date_start',
+      'id'   => $prefix . 'date_start',
       'type' => 'text_date',
       // 'timezone_meta_key' => 'wiki_test_timezone',
       'date_format' => 'Y-m-d',
@@ -126,7 +126,7 @@ class Exhibition_Admin {
     
     $cmb->add_field( array(
       'name' => __( 'End', 'exhibition' ),
-      'id'   => 'date_end',
+      'id'   => $prefix . 'date_end',
       'type' => 'text_date',
       'date_format' => 'Y-m-d',
       'column' => array(
@@ -138,7 +138,7 @@ class Exhibition_Admin {
     $cmb->add_field( array(
       'name' => __( 'Until further notice', 'exhibition' ),
       'desc' => __( "If the exhibition doesn't have a set end date.", 'exhibition' ),
-      'id'   => 'date_no_end',
+      'id'   => $prefix . 'date_no_end',
       'type' => 'checkbox',
     ) );
   
@@ -160,7 +160,7 @@ class Exhibition_Admin {
     $cmb->add_field( array(
       'name' => __( 'Synchronize', 'exhibition' ),
       'desc' => 'Synchronize this post with DigitaltMuseum. Note that local data will be overwritten.',
-      'id'   => 'synchronize',
+      'id'   => $prefix . 'synchronize',
       'type' => 'checkbox',
       'column' => array(
         'position' => 4,
@@ -171,28 +171,27 @@ class Exhibition_Admin {
     $cmb->add_field( array(
       'name' => __( 'Warning', 'exhibition'),
       'desc' => __( "Editing these fields may result in connection problems with DigitaltMuseum.", 'exhibition' ),
-      'type' => 'title',
-      'id'   => 'dm_title'
+      'type' => 'title'
     ) );
     
     $cmb->add_field( array(
       'name' => __( 'Museum inventory no.', 'exhibition' ),
       'desc' => __( "Museum or collection's own identifier / inventory no., e.g. HM27346", 'exhibition' ),
-      'id'   => 'id_museum',
+      'id'   => $prefix . 'id_museum',
       'type' => 'text',
     ) );
     
     $cmb->add_field( array(
       'name' => __( 'DiMu ID', 'exhibition' ),
       'desc' => __( 'DiMu-specific unique id for object, e.g. 021106469355', 'exhibition' ),
-      'id'   => 'artifact_uniqueid',
+      'id'   => $prefix . 'artifact_uniqueid',
       'type' => 'text',
     ) );
     
     $cmb->add_field( array(
       'name' => __( 'UUID', 'exhibition' ),
       'desc' => __( 'UUID e.g. CC52D261-405C-47C6-88EF-4FD7D4EF725C', 'exhibition' ),
-      'id'   => 'id_uuid',
+      'id'   => $prefix . 'id_uuid',
       'type' => 'text',
     ) );
   
