@@ -30,6 +30,9 @@ class Exhibition_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+  	
+  	$timestamp = wp_next_scheduled( 'exhibition_cron_hook' );
+    wp_unschedule_event( $timestamp, 'exhibition_cron_hook' );
 
 	}
 

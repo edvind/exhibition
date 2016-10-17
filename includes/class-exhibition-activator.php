@@ -31,13 +31,17 @@ class Exhibition_Activator {
 	 */
 	public static function activate() {
     
+    // Default slug for artists
     if ( get_option( 'slug_artists' ) == false ) {
       update_option( 'slug_artists', 'artists' );
     }
     
+    // Default slug for exhibitions
     if ( get_option( 'slug_exhibitions' ) == false ) {
       update_option( 'slug_exhibitions', 'exhibitions' );
     }
+    
+    wp_schedule_event( mktime(7), 'daily', 'exhibition_cron_hook' );
     
 	}
 

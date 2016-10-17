@@ -277,5 +277,16 @@ class Exhibition_Shared {
     return substr( $headers[0], 9, 3 );
     
   }
+  
+  /**
+	 * Execute daily cronjob 
+	 *
+	 * @since 		1.0.0
+	 */ 
+  public function exhibition_cron_exec() {
+    
+    $this->exhibition_import_from_dm();
+    
+  }
 	
 } // class

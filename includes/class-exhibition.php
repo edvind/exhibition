@@ -209,7 +209,7 @@ class Exhibition {
   	
 		$plugin_shared = new Exhibition_Shared( $this->get_plugin_name(), $this->get_version() );
 
-		//$this->loader->add_action( 'init', $plugin_shared, 'artist_taxonomy' );
+		$this->loader->add_action( 'exhibition_cron_hook', $plugin_shared, 'exhibition_cron_exec' );
 
 	}
 	
