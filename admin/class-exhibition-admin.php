@@ -170,6 +170,17 @@ class Exhibition_Admin {
     ) );
     
     $cmb->add_field( array(
+      'name' => __( 'Synchronize', 'exhibition' ),
+      'desc' => 'Synchronize this post with DigitaltMuseum. Note that local data will be overwritten.',
+      'id'   => 'synchronize',
+      'type' => 'checkbox',
+      'column' => array(
+        'position' => 4,
+        'name'     => __( 'Synchronize', 'exhibition' ),
+      ),
+    ) );
+    
+    $cmb->add_field( array(
       'name' => __( 'Warning', 'exhibition'),
       'desc' => __( "Editing these fields may result in connection problems with DigitaltMuseum.", 'exhibition' ),
       'type' => 'title',
@@ -227,6 +238,32 @@ class Exhibition_Admin {
    */
   public function display_plugin_setup_page() {
   	include_once( 'partials/exhibition-admin-display.php' );
+  }
+  
+  /**
+   * Display messages at the top of admin area
+   *
+   * @since 1.0.0
+   */
+  public function admin_notice() {
+    
+    $screen = get_current_screen();
+    
+    if( $screen->id == 'exhibition' ) {
+      
+      global $post;
+      $post_metadata = get_post_meta( $post->ID );
+      
+      if( isset( $post_metadata["synchronize"] ) ) {
+
+        ?>
+        <div class="notice notice-warning">
+            <p><?php _e( 'Warning! Edits to this exhibition will be overwritten since this post is marked for synchronization with DigitaltMuseum.', 'exhibition' ); ?> </p>
+        </div>
+        <?php
+
+      }
+    }
   }
 
 }
