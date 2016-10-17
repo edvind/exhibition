@@ -76,66 +76,118 @@ class Exhibition_Shared {
     $local_uuids = $this->get_meta_values( '_exhibition_id_uuid' );
   	
   	// Search through all found exhibitions
-  	foreach ($json_feed->response->docs as $exhibition):
+  	foreach ( $json_feed->response->docs as $exhibition ):
   	    
-  	    foreach ($local_uuids as $local_uuid):
-  	    
-  	      // See if UUID exists in exhibition database
-  	      if ( $local_uuid->meta_value == $exhibition->{'artifact.uuid'} ):
-
-    	      $post_metadata = get_post_meta( $local_uuid->post_id );
+      foreach ($local_uuids as $local_uuid):
+      
+        // See if UUID exists in exhibition database
+        if ( $local_uuid->meta_value == $exhibition->{'artifact.uuid'} ):
+  
+  	      $post_metadata = get_post_meta( $local_uuid->post_id );
+  	      
+          // If post is marked for synchronization
+          if ( isset( $post_metadata["_exhibition_synchronize"][0] ) ):
             
-            // If post is marked for synchronization
-            if( isset( $post_metadata["_exhibition_synchronize"] ) ):
+            if( $post_metadata["_exhibition_synchronize"][0] == 'on' ):
             
-              echo 'UUID exists and post is marked for synchronization, update post with id: '.$local_uuid->post_id.'<br/>';
-              $this->exhibition_insert_post( $exhibition->{'artifact.uuid'} );
+              $this->exhibition_update_post( $exhibition->{'artifact.uuid'}, $local_uuid->post_id, false );
               
             endif;
-            
-  	      else:
-  	      
-  	        echo 'UUID doesn\'t exist, insert following post<br/>';
-            $this->exhibition_insert_post( $exhibition->{'artifact.uuid'} );
-            
-  	      endif;
-  	    
-  	    endforeach;
+          
+          endif;
+          
+          continue 2;
+          
+        endif;
+      
+      endforeach;
+      
+      $this->exhibition_insert_post( $exhibition->{'artifact.uuid'} );
   	
   	endforeach;
   }
   
   /**
-	 * Import found exhibition to the exhibition custom post type.
+	 * Insert exhibition uuid as exhibition custom post type.
 	 *
 	 * @since 		1.0.0
 	 * @var       string    $uuid    Unique ID of DigitaltMuseum post eg. CC52D261-405C-47C6-88EF-4FD7D4EF725C
 	 */
 	public function exhibition_insert_post( $uuid ) {
     
+    // Fetch exhibition information from 
     $exhibition = $this->fetch_dm_exhibition( $uuid );
-  	
-  	echo $exhibition->title;
-    echo '<br>';
-  	echo $exhibition->uuid;
-  	echo '<br>';
-  	echo $exhibition->unique_id;
-  	echo '<br>';
-  	echo $exhibition->id;
-  	echo '<br>';
-  	echo $exhibition->date_start;
-  	echo '<br>';
-  	echo $exhibition->date_end;
-  	echo '<br>';
-  	echo $exhibition->description_ingress;
-  	echo '<br>';
-  	echo $exhibition->description;
-  	echo '<br><br>';
-  	
+    
+    // Create post object
+    $exhibition_post = array(
+      'post_title'    => wp_strip_all_tags( $exhibition->title ),
+      'post_content'  => '<i>' . $exhibition->description_ingress . '</i><br><br>' .$exhibition->description,
+      'post_status'   => 'publish',
+      'post_type'     => 'exhibition',
+      'post_author'   => 19
+    );
+     
+    // Insert the post into the database
+    $exhibition_post_id = wp_insert_post( $exhibition_post );
+    
+    if ( $exhibition_post_id != false ) {
+      
+      add_post_meta( $exhibition_post_id, '_exhibition_date_start', $exhibition->date_start );
+      add_post_meta( $exhibition_post_id, '_exhibition_date_end', $exhibition->date_end );
+      add_post_meta( $exhibition_post_id, '_exhibition_id_museum', $exhibition->id );
+      add_post_meta( $exhibition_post_id, '_exhibition_artifact_uniqueid', $exhibition->unique_id );
+      add_post_meta( $exhibition_post_id, '_exhibition_id_uuid', $exhibition->uuid );
+      
+    }
+
   }
   
+  /**
+	 * Update exhibition post with information taken from DigitalMuseum.
+	 *
+	 * @since 		1.0.0
+	 * @var       string    $uuid                  Unique ID of DigitaltMuseum post eg. CC52D261-405C-47C6-88EF-4FD7D4EF725C
+	 * @var       string    $exhibition_post_id    Existing exhibition post ID
+	 * @var       boolean   $synchronize           Whether or not to turn off synchronization
+	 */
+	public function exhibition_update_post( $uuid, $exhibition_post_id, $synchronize = true ) {
+    
+    // Fetch exhibition information from 
+    $exhibition = $this->fetch_dm_exhibition( $uuid );
+    
+        // Create post object
+    $exhibition_post = array(
+      'ID'            => $exhibition_post_id,
+      'post_title'    => wp_strip_all_tags( $exhibition->title ),
+      'post_content'  => '<i>' . $exhibition->description_ingress . '</i><br><br>' .$exhibition->description,
+      'post_status'   => 'publish',
+      'post_type'     => 'exhibition',
+      'post_author'   => 19
+    );
+     
+    // Insert the post into the database
+    $exhibition_post_id = wp_insert_post( $exhibition_post );
+    
+    if ( $exhibition_post_id != false ) {
+      
+      add_post_meta( $exhibition_post_id, '_exhibition_date_start', $exhibition->date_start );
+      add_post_meta( $exhibition_post_id, '_exhibition_date_end', $exhibition->date_end );
+      add_post_meta( $exhibition_post_id, '_exhibition_id_museum', $exhibition->id );
+      add_post_meta( $exhibition_post_id, '_exhibition_artifact_uniqueid', $exhibition->unique_id );
+      add_post_meta( $exhibition_post_id, '_exhibition_id_uuid', $exhibition->uuid );
+      
+      if ( $synchronize == false ) {
+        
+        delete_post_meta( $exhibition_post_id, '_exhibition_synchronize' );
+        
+      }
+      
+    }
+  	
+  }
+    
 /**
-	 * Import found exhibition to the exhibition custom post type.
+	 * Import found exhibition as an exhibition custom post type.
 	 *
 	 * @since 		1.0.0
 	 * @var       string    $uuid    Unique ID of DigitaltMuseum post eg. CC52D261-405C-47C6-88EF-4FD7D4EF725C
