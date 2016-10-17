@@ -241,7 +241,7 @@ class Exhibition_Admin {
       global $post;
       $post_metadata = get_post_meta( $post->ID );
       
-      if( isset( $post_metadata["synchronize"] ) ) {
+      if( isset( $post_metadata["_exhibition_synchronize"] ) ) {
 
         ?>
         <div class="notice notice-warning">
