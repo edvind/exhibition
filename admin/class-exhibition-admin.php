@@ -61,18 +61,6 @@ class Exhibition_Admin {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Exhibition_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Exhibition_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/exhibition-admin.css', array(), $this->version, 'all' );
 
 	}
@@ -265,5 +253,29 @@ class Exhibition_Admin {
       }
     }
   }
+  
+  /**
+   * Display exhibitions on the right now admin widget
+   *
+   * @since 1.0.0
+   */
+  public function exhibitions_add_to_glance() {
+    $args = array(
+      'public' => true,
+      '_builtin' => false
+    );
+    $output = 'object';
+    $operator = 'and';
 
+    $post_types = get_post_types( $args, $output, $operator );
+    foreach ( $post_types as $post_type ) {
+      $num_posts = wp_count_posts( $post_type->name );
+      $num = number_format_i18n( $num_posts->publish );
+      $text = _n( strtolower($post_type->labels->singular_name), strtolower($post_type->labels->name), intval( $num_posts->publish ) );
+      if ( current_user_can( 'edit_posts' ) ) {
+        $output = '<a href="edit.php?post_type=' . $post_type->name . '">' . $num . ' ' . $text . '</a>';
+        echo '<li class="post-count ' . $post_type->name . '-count">' . $output . '</li>';
+      }
+    }
+  }
 }

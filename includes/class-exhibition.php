@@ -178,6 +178,7 @@ class Exhibition {
     $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_exhibition_admin_menu' );
     $this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notice' );
+    $this->loader->add_action( 'dashboard_glance_items', $plugin_admin, 'exhibitions_add_to_glance' );
 
 	}
 

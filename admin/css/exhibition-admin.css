@@ -1,4 +1,9 @@
 /**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
+ * Dashboard exhibition and event count dashicons
  */
+#dashboard_right_now .exhibition-count a:before {
+  content: "\f538";
+}
+#dashboard_right_now .event-count a:before {
+  content: "\f145";
+}
