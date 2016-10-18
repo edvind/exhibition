@@ -138,6 +138,8 @@ class Exhibition_Shared {
       add_post_meta( $exhibition_post_id, '_exhibition_artifact_uniqueid', $exhibition->unique_id );
       add_post_meta( $exhibition_post_id, '_exhibition_id_uuid', $exhibition->uuid );
       
+      $this->download_image_from_dm( $exhibition->media, $exhibition->title, $exhibition_post_id );
+      
     }
 
   }
@@ -155,14 +157,14 @@ class Exhibition_Shared {
     // Fetch exhibition information from 
     $exhibition = $this->fetch_dm_exhibition( $uuid );
     
-        // Create post object
+    // Create post object
     $exhibition_post = array(
       'ID'            => $exhibition_post_id,
       'post_title'    => wp_strip_all_tags( $exhibition->title ),
       'post_content'  => '<i>' . $exhibition->description_ingress . '</i><br><br>' .$exhibition->description,
       'post_status'   => 'publish',
       'post_type'     => 'exhibition',
-      'post_author'   => 19
+      'post_author'   => 19 //TODO
     );
      
     // Insert the post into the database
@@ -182,8 +184,25 @@ class Exhibition_Shared {
         
       }
       
+      // Check if attachment already exists, otherwise download
+      global $wpdb;
+      $filename = $exhibition->media . '.jpg';
+      $uploads = wp_upload_dir();
+      $image_url = esc_url( $uploads['baseurl'] ) . '/' . $filename;
+      $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url )); 
+      
+      if ( !empty( $attachment ) ) {
+        
+        $attachment_id = $attachment[0];
+        set_post_thumbnail( $exhibition_post_id, $attachment_id );
+
+      } else {
+        
+        $this->download_image_from_dm( $exhibition->media, $exhibition->title, $exhibition_post_id );
+
+      }
+
     }
-  	
   }
     
 /**
@@ -219,13 +238,21 @@ class Exhibition_Shared {
   	  
   	endforeach;
   	
-  	foreach ( $json_feed->media->pictures as $picture ) :
+    if ( !empty( $json_feed->media->pictures ) ) {
+      
+      foreach ( $json_feed->media->pictures as $picture ) :
   	
-  	  if ( $picture->code == '0' ) :
-  	    $exhibition_picture = $picture->identifier;
-  	  endif;
+    	  if ( $picture->code == '0' ) :
+    	    $exhibition_picture = $picture->identifier;
+    	  endif;
   	  
-  	endforeach;
+      endforeach;
+      
+    } else {
+      
+      $exhibition_picture = '';
+      
+    }
   	
     $exhibition = (object) [
       'title' => $exhibition_title,
@@ -297,5 +324,70 @@ class Exhibition_Shared {
     $this->exhibition_import_from_dm();
     
   }
-	
+  
+  /**
+   * Download image from DigitaltMuseum and save as attachment
+   *
+   * @since     1.0.0
+	 * @var       string    $image_id   DigitaltMuseum media id to download
+	 * @var       string    $title      Title (optional)
+	 * @var       string    $post_id    Post id to attach this image to (optional)
+	 * @return    string                Attachment post id
+   */
+	public function download_image_from_dm( $image_id, $title = '', $post_id = '0' ) {
+  	
+  	$url = 'http://dms01.dimu.org/image/' . $image_id . '?dimension=max';
+    
+    if( $image_id != '' ) {
+     
+      $file = array();
+      
+      $file['name'] = $image_id . '.jpg';
+      $file['type'] = 'image/jpeg';
+      $file['tmp_name'] = download_url( $url );
+
+      if (is_wp_error( $file['tmp_name'] )) {
+        
+        @unlink( $file['tmp_name'] );
+        var_dump( $file['tmp_name']->get_error_messages( ) );
+        
+      } else {
+        
+        $attachment_id = media_handle_sideload( $file, '0' );
+         
+        if ( is_wp_error($attachment_id) ) {
+          
+          @unlink( $file['tmp_name'] );
+          var_dump( $attachment_id->get_error_messages( ) );
+          
+        } else {
+          
+          if( $title != '' ) {
+            $attachment_post_title = $title;
+          } else {
+            $attachment_post_title = $image_id;
+          }
+          
+          $attachment_post = array(
+            'ID'            => $attachment_id,
+            'post_title'    => wp_strip_all_tags( $attachment_post_title ),
+            'post_name'     => sanitize_title( $attachment_post_title ),
+            'post_author'   => 19 //TODO
+          );
+           
+          // Insert the post into the database
+          $attachment_id = wp_update_post( $attachment_post );
+          
+          if ( $post_id != '0' ) {
+            
+            set_post_thumbnail( $post_id, $attachment_id );
+            
+          }
+        }
+      }
+    }
+    
+    return $attachment_id;
+    
+  }
 } // class
