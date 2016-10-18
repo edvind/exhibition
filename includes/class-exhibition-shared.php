@@ -219,6 +219,14 @@ class Exhibition_Shared {
   	  
   	endforeach;
   	
+  	foreach ( $json_feed->media->pictures as $picture ) :
+  	
+  	  if ( $picture->code == '0' ) :
+  	    $exhibition_picture = $picture->identifier;
+  	  endif;
+  	  
+  	endforeach;
+  	
     $exhibition = (object) [
       'title' => $exhibition_title,
       'uuid' => $uuid,
@@ -228,6 +236,7 @@ class Exhibition_Shared {
       'date_end' => $this->dm_date_to_wp( $json_feed->exhibition->timespan->toDate ),
       'description_ingress' => nl2br( $json_feed->exhibition->description ),
       'description' => nl2br( $json_feed->description ),
+      'media' => $exhibition_picture,
     ];
   	
   	return $exhibition;
