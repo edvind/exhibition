@@ -245,7 +245,7 @@ class Exhibition_Admin {
 
         ?>
         <div class="notice notice-warning">
-            <p><?php _e( 'Warning! Edits to this exhibition will be overwritten since this post is marked for synchronization with DigitaltMuseum.', 'exhibition' ); ?> </p>
+            <p><?php printf( esc_html__( 'Warning! Edits to this exhibition will be overwritten on %1$s at %2$s since this post is marked for synchronization with DigitaltMuseum.', 'exhibition' ), date_i18n( get_option( 'date_format' ), wp_next_scheduled( 'exhibition_cron_hook' ) ), date_i18n( get_option( 'time_format' ), wp_next_scheduled( 'exhibition_cron_hook' ) ) ); ?> </p>
         </div>
         <?php
 
