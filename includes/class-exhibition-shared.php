@@ -201,7 +201,6 @@ class Exhibition_Shared {
         $this->download_image_from_dm( $exhibition->media, $exhibition->title, $exhibition_post_id );
 
       }
-
     }
   }
     
