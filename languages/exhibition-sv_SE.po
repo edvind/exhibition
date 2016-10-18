@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Exhibition\n"
-"POT-Creation-Date: 2016-10-13 20:37+0200\n"
-"PO-Revision-Date: 2016-10-13 20:39+0200\n"
+"POT-Creation-Date: 2016-10-18 21:28+0200\n"
+"PO-Revision-Date: 2016-10-18 21:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -20,192 +20,284 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: includes/class-exhibition-taxonomy.php:66
+#: admin/class-exhibition-admin.php:106
+msgid "Exhibition information"
+msgstr "Utställningsinformation"
+
+#: admin/class-exhibition-admin.php:116 admin/class-exhibition-admin.php:123
+msgid "Start"
+msgstr "Start"
+
+#: admin/class-exhibition-admin.php:128 admin/class-exhibition-admin.php:134
+msgid "End"
+msgstr "Slut"
+
+#: admin/class-exhibition-admin.php:139
+msgid "Until further notice"
+msgstr "Tills vidare"
+
+#: admin/class-exhibition-admin.php:140
+msgid "If the exhibition doesn't have a set end date."
+msgstr "Om utställningen inte har ett slutdatum."
+
+#: admin/class-exhibition-admin.php:151
+#: admin/partials/exhibition-admin-display.php:23
+msgid "DigitaltMuseum"
+msgstr "DigitaltMuseum"
+
+#: admin/class-exhibition-admin.php:161 admin/class-exhibition-admin.php:167
+msgid "Synchronize"
+msgstr "Synkronisera"
+
+#: admin/class-exhibition-admin.php:172
+msgid "Warning"
+msgstr "Varning"
+
+#: admin/class-exhibition-admin.php:173
+msgid ""
+"Editing these fields may result in connection problems with DigitaltMuseum."
+msgstr ""
+"Ändring av dessa fält kan skapa anslutningsproblem med DigitaltMuseum."
+
+#: admin/class-exhibition-admin.php:178
+msgid "Museum inventory no."
+msgstr "Museets inventarienr."
+
+#: admin/class-exhibition-admin.php:179
+msgid "Museum or collection's own identifier / inventory no., e.g. HM27346"
+msgstr "Museets eller samlingens egna inventarienummer, ex. HM27346"
+
+#: admin/class-exhibition-admin.php:185
+msgid "DiMu ID"
+msgstr "DiMu ID"
+
+#: admin/class-exhibition-admin.php:186
+msgid "DiMu-specific unique id for object, e.g. 021106469355"
+msgstr "DiMu-specifikt unikt id för objekt, ex. 021106469355"
+
+#: admin/class-exhibition-admin.php:192
+msgid "UUID"
+msgstr "UUID"
+
+#: admin/class-exhibition-admin.php:193
+msgid "UUID e.g. CC52D261-405C-47C6-88EF-4FD7D4EF725C"
+msgstr "UUID, ex. CC52D261-405C-47C6-88EF-4FD7D4EF725C"
+
+#: admin/class-exhibition-admin.php:206
+#: admin/partials/exhibition-admin-display.php:18
+msgid "Exhibition settings"
+msgstr "Utställningsinställningar"
+
+#: admin/class-exhibition-admin.php:206
+#: admin/partials/exhibition-admin-display.php:39
+#: includes/class-exhibition-type.php:74
+msgid "Exhibitions"
+msgstr "Utställningar"
+
+#: admin/class-exhibition-admin.php:248
+#, php-format
+msgid ""
+"Warning! Edits to this exhibition will be overwritten on %1$s at %2$s since "
+"this post is marked for synchronization with DigitaltMuseum."
+msgstr ""
+"Varning! Ändringar i denna utställning kommer skrivas över den %1$s kl. "
+"%2$s då utställningen är markerad för att synkroniseras med DigitaltMuseum."
+
+#: admin/partials/exhibition-admin-display.php:26
+msgid "API Key"
+msgstr "API-nyckel"
+
+#: admin/partials/exhibition-admin-display.php:31
+msgid "Museum"
+msgstr "Museum"
+
+#: admin/partials/exhibition-admin-display.php:36
+msgid "Slugs"
+msgstr "Permalänkar"
+
+#: admin/partials/exhibition-admin-display.php:44
+#: includes/class-exhibition-taxonomy.php:74
+msgid "Artists"
+msgstr "Konstnärer"
+
+#: includes/class-exhibition-taxonomy.php:72
 msgctxt "Taxonomy General Name"
 msgid "Artists"
 msgstr "Konstnärer"
 
-#: includes/class-exhibition-taxonomy.php:67
+#: includes/class-exhibition-taxonomy.php:73
 msgctxt "Taxonomy Singular Name"
 msgid "Artist"
 msgstr "Konstnär"
 
-#: includes/class-exhibition-taxonomy.php:68
-msgid "Artists"
-msgstr "Konstnärer"
-
-#: includes/class-exhibition-taxonomy.php:69
+#: includes/class-exhibition-taxonomy.php:75
 msgid "All Artists"
 msgstr "Alla konstnärer"
 
-#: includes/class-exhibition-taxonomy.php:70
+#: includes/class-exhibition-taxonomy.php:76
 msgid "Parent Artist"
 msgstr "Överordnad konstnär"
 
-#: includes/class-exhibition-taxonomy.php:71
+#: includes/class-exhibition-taxonomy.php:77
 msgid "Parent Artist:"
 msgstr "Överordnad konstnär:"
 
-#: includes/class-exhibition-taxonomy.php:72
+#: includes/class-exhibition-taxonomy.php:78
 msgid "New Artist Name"
 msgstr "Konstnärens namn"
 
-#: includes/class-exhibition-taxonomy.php:73
+#: includes/class-exhibition-taxonomy.php:79
 msgid "Add New Artist"
 msgstr "Lägg till ny konstnär"
 
-#: includes/class-exhibition-taxonomy.php:74
+#: includes/class-exhibition-taxonomy.php:80
 msgid "Edit Artist"
 msgstr "Redigera konstnär"
 
-#: includes/class-exhibition-taxonomy.php:75
+#: includes/class-exhibition-taxonomy.php:81
 msgid "Update Artist"
 msgstr "Uppdatera konstnär"
 
-#: includes/class-exhibition-taxonomy.php:76
+#: includes/class-exhibition-taxonomy.php:82
 msgid "View Artist"
 msgstr "Visa konstnär"
 
-#: includes/class-exhibition-taxonomy.php:77
+#: includes/class-exhibition-taxonomy.php:83
 msgid "Separate artists with commas"
 msgstr "Separera konstnärer med kommatecken"
 
-#: includes/class-exhibition-taxonomy.php:78
+#: includes/class-exhibition-taxonomy.php:84
 msgid "Add or remove artists"
 msgstr "Lägg till eller ta bort konstnärer"
 
-#: includes/class-exhibition-taxonomy.php:79
+#: includes/class-exhibition-taxonomy.php:85
 msgid "Choose from the most used artists"
 msgstr "Välj från de mest använda konstnärerna"
 
-#: includes/class-exhibition-taxonomy.php:80
+#: includes/class-exhibition-taxonomy.php:86
 msgid "Popular Artists"
 msgstr "Populära konstnärer"
 
-#: includes/class-exhibition-taxonomy.php:81
+#: includes/class-exhibition-taxonomy.php:87
 msgid "Search Artists"
 msgstr "Sök konstnärer"
 
-#: includes/class-exhibition-taxonomy.php:82
+#: includes/class-exhibition-taxonomy.php:88
 msgid "Not Found"
 msgstr "Inget hittades"
 
-#: includes/class-exhibition-taxonomy.php:83
+#: includes/class-exhibition-taxonomy.php:89
 msgid "No Artists"
 msgstr "Inga konstnärer"
 
-#: includes/class-exhibition-taxonomy.php:84
+#: includes/class-exhibition-taxonomy.php:90
 msgid "Artists list"
 msgstr "Konstnärslista"
 
-#: includes/class-exhibition-taxonomy.php:85
+#: includes/class-exhibition-taxonomy.php:91
 msgid "Artists list navigation"
 msgstr "Konstnärslistnavigation"
 
-#: includes/class-exhibition-type.php:66
+#: includes/class-exhibition-type.php:72
 msgctxt "Post Type General Name"
 msgid "Exhibitions"
 msgstr "Utställningar"
 
-#: includes/class-exhibition-type.php:67
+#: includes/class-exhibition-type.php:73
 msgctxt "Post Type Singular Name"
 msgid "Exhibition"
 msgstr "Utställning"
 
-#: includes/class-exhibition-type.php:68
-msgid "Exhibitions"
-msgstr "Utställningar"
-
 #. Plugin Name of the plugin/theme
-#: includes/class-exhibition-type.php:69 includes/class-exhibition-type.php:93
+#: includes/class-exhibition-type.php:75 includes/class-exhibition-type.php:99
 msgid "Exhibition"
 msgstr "Utställning"
 
-#: includes/class-exhibition-type.php:70
+#: includes/class-exhibition-type.php:76
 msgid "Exhibition Archives"
 msgstr "Utställningsarkiv"
 
-#: includes/class-exhibition-type.php:71
+#: includes/class-exhibition-type.php:77
 msgid "Parent Exhibition:"
 msgstr "Överordnad utställning:"
 
-#: includes/class-exhibition-type.php:72
+#: includes/class-exhibition-type.php:78
 msgid "All Exhibitions"
 msgstr "Alla utställningar"
 
-#: includes/class-exhibition-type.php:73
+#: includes/class-exhibition-type.php:79
 msgid "Add New Exhibition"
 msgstr "Lägg till ny utställning"
 
-#: includes/class-exhibition-type.php:74
+#: includes/class-exhibition-type.php:80
 msgid "Add New"
 msgstr "Lägg till ny"
 
-#: includes/class-exhibition-type.php:75
+#: includes/class-exhibition-type.php:81
 msgid "New Exhibition"
 msgstr "Ny utställning"
 
-#: includes/class-exhibition-type.php:76
+#: includes/class-exhibition-type.php:82
 msgid "Edit Exhibition"
 msgstr "Redigera utställning"
 
-#: includes/class-exhibition-type.php:77
+#: includes/class-exhibition-type.php:83
 msgid "Update Exhibition"
 msgstr "Uppdatera utställning"
 
-#: includes/class-exhibition-type.php:78
+#: includes/class-exhibition-type.php:84
 msgid "View Exhibition"
 msgstr "Visa utställning"
 
-#: includes/class-exhibition-type.php:79
+#: includes/class-exhibition-type.php:85
 msgid "Search Exhibition"
 msgstr "Sök utställning"
 
-#: includes/class-exhibition-type.php:80
+#: includes/class-exhibition-type.php:86
 msgid "Not found"
 msgstr "Inget hittades"
 
-#: includes/class-exhibition-type.php:81
+#: includes/class-exhibition-type.php:87
 msgid "Not found in Trash"
 msgstr "Inget hittades i papperskorgen"
 
-#: includes/class-exhibition-type.php:82
+#: includes/class-exhibition-type.php:88
 msgid "Exhibition Image"
 msgstr "Utställningsbild"
 
-#: includes/class-exhibition-type.php:83
+#: includes/class-exhibition-type.php:89
 msgid "Set exhibition image"
 msgstr "Välj utställningsbild"
 
-#: includes/class-exhibition-type.php:84
+#: includes/class-exhibition-type.php:90
 msgid "Remove exhibition image"
 msgstr "Ta bort utställningsbild"
 
-#: includes/class-exhibition-type.php:85
+#: includes/class-exhibition-type.php:91
 msgid "Use as exhibition image"
 msgstr "Använd som utställningsbild"
 
-#: includes/class-exhibition-type.php:86
+#: includes/class-exhibition-type.php:92
 msgid "Insert into exhibition"
 msgstr "Lägg till i utställningen"
 
-#: includes/class-exhibition-type.php:87
+#: includes/class-exhibition-type.php:93
 msgid "Uploaded to this exhibition"
 msgstr "Laddas upp till denna utställning"
 
-#: includes/class-exhibition-type.php:88
+#: includes/class-exhibition-type.php:94
 msgid "Exhibition list"
 msgstr "Utställningslista"
 
-#: includes/class-exhibition-type.php:89
+#: includes/class-exhibition-type.php:95
 msgid "Exhibitions list navigation"
 msgstr "Utställningslistnavigation"
 
-#: includes/class-exhibition-type.php:90
+#: includes/class-exhibition-type.php:96
 msgid "Filter exhibitions list"
 msgstr "Filtrera utställningslista"
 
-#: includes/class-exhibition-type.php:94
+#: includes/class-exhibition-type.php:100
 msgid "Exhibition description"
 msgstr "Utställningsbeskrivning"
 
