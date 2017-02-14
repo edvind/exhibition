@@ -41,7 +41,7 @@ class Exhibition_Activator {
       update_option( 'slug_exhibitions', 'exhibitions' );
     }
     
-    wp_schedule_event( mktime(7), 'daily', 'exhibition_cron_hook' );
+    //wp_schedule_event( mktime(7), 'daily', 'exhibition_cron_hook' );
     
 	}
 
