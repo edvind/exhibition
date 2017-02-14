@@ -162,7 +162,7 @@ class Exhibition_Shared {
       'ID'            => $exhibition_post_id,
       'post_title'    => wp_strip_all_tags( $exhibition->title ),
       'post_content'  => '<i>' . $exhibition->description_ingress . '</i><br><br>' .$exhibition->description,
-      'post_status'   => 'publish',
+      'post_status'   => 'draft',
       'post_type'     => 'exhibition',
       'post_author'   => 19 //TODO
     );
